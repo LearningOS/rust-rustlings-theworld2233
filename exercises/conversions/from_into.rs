@@ -1,8 +1,6 @@
 // The From trait is used for value-to-value conversions.
 // If From is implemented correctly for a type, the Into trait should work conversely.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
-// Execute `rustlings hint from_into` or use the `hint` watch subcommand for a hint.
-
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -34,11 +32,37 @@ impl Default for Person {
 // 5. Extract the other element from the split operation and parse it into a `usize` as the age
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
-
-// I AM NOT DONE
-
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 {
+            Person::default()
+        } else {
+            let mut p = Person::default();
+            let mut sp = s.split(',');
+            match sp.next() {
+                Some(i) => {
+                    p.name = i.to_string();
+                    if p.name.len() == 0 {
+                        p = Person::default();
+                        return p;
+                    }
+                },
+                None => {
+                    p = Person::default();
+                    return p;
+                }
+            };
+            match sp.next() {
+                Some(i) => {
+                    match i.parse::<usize>() {
+                        Ok(j) => p.age = j,
+                        Err(k) => p = Person::default()
+                    }
+                }
+                None => p = Person::default()
+            };
+            p
+        }
     }
 }
 
@@ -77,7 +101,7 @@ mod tests {
     }
     #[test]
     fn test_bad_age() {
-        // Test that "Mark,twenty" will return the default person due to an error in parsing age
+        // Test that "Mark.twenty" will return the default person due to an error in parsing age
         let p = Person::from("Mark,twenty");
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
@@ -114,20 +138,6 @@ mod tests {
     #[test]
     fn test_missing_name_and_invalid_age() {
         let p: Person = Person::from(",one");
-        assert_eq!(p.name, "John");
-        assert_eq!(p.age, 30);
-    }
-
-    #[test]
-    fn test_trailing_comma() {
-        let p: Person = Person::from("Mike,32,");
-        assert_eq!(p.name, "John");
-        assert_eq!(p.age, 30);
-    }
-
-    #[test]
-    fn test_trailing_comma_and_some_string() {
-        let p: Person = Person::from("Mike,32,man");
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
     }

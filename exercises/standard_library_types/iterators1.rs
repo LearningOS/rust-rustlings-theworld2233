@@ -1,24 +1,15 @@
-// iterators1.rs
-//
-//  Make me compile by filling in the `???`s
-//
-// When performing operations on elements within a collection, iterators are essential.
-// This module helps you get familiar with the structure of using an iterator and
-// how to go through elements within an iterable collection.
-//
-// Execute `rustlings hint iterators1` or use the `hint` watch subcommand for a hint.
+fn main() {
+    let mut my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
 
-// I AM NOT DONE
+    let mut my_iterable_fav_fruits = my_fav_fruits.iter();   // Step 1: Use `iter_mut` to create a mutable iterator.
 
-fn main () {
-    let my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
+    assert_eq!(my_iterable_fav_fruits.next(), Some(& "banana"));    // Step 2: Use `next()` to retrieve the next element in the iterator.
+    assert_eq!(my_iterable_fav_fruits.next(), Some(& "custard apple"));
+    assert_eq!(my_iterable_fav_fruits.next(), Some(& "avocado"));
+    assert_eq!(my_iterable_fav_fruits.next(), Some(& "peach"));
+   // let new_element = "sss";
+    //my_fav_fruits.push(new_element);
+ assert_eq!(my_iterable_fav_fruits.next(), Some(& "raspberry"));
+assert_eq!(my_iterable_fav_fruits.next(), None);
 
-    let mut my_iterable_fav_fruits = ???;   // TODO: Step 1
-
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"banana"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 2
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"avocado"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 3
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"raspberry"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 4
 }
